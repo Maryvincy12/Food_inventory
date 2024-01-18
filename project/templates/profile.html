@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script>
+function toggleForm(){
+                var form=document.getElementById('myform');
+                if(form.style.display==="none"){
+                    form.style.display="block";
+                }else{
+                    form.style.display="none";
+                }
+            }
+            function toggleForm2(){
+                var form=document.getElementById('myform2');
+                if(form.style.display==="none"){
+                    form.style.display="block";
+                }else{
+                    form.style.display="none";
+                }
+            }
+            function toggleForm3(){
+                var form=document.getElementById('table1');
+                if(form.style.display==="none"){
+                    form.style.display="block";
+                }else{
+                    form.style.display="none";
+                }
+            }
+</script>
+</head>
+<body>
+    <div class="topnav">
+        <a class="active" href="home">Home</a>
+        <button onclick="window.location = 'http://localhost:5000/dropsession'" type="submit" class="split">Logout</button>
+      </div><br><br><br>
+      <h1>Welcome {{stat}}</h1><br>
+    <div class="btn-grp">
+    <button   type="button" onclick="toggleForm()">Add Items</button><br>
+    <button type="button" onclick="toggleForm2()">Edit/Delete</button><br>
+
+    <button type="button" onclick="toggleForm3()">View Items</button>
+
+    
+    </div>
+    <div class="cont">
+        <form id="myform" action="{{url_for('add_item')}}" enctype="multipart/form-data" method='POST'>
+            
+            <input type="text" id="name1" name="bname" value= {{stat}} readonly required>
+            <br>
+            <label for="name">Item Name</label><br>
+            <input type="text" id="name" name="iname" required>
+            <br>
+            <label for="email">Quantity</label><br>
+            <input type="text" id="num" name="num" required>
+            <br>
+            <label for="email">Image</label><br>
+            <input type="file"  name="file" accept="image/*" required>
+            
+            <br>
+            <input type="submit" value="submit">
+        </form>
+        
+          </div>
+    <br>
+    {% with messages = get_flashed_messages()  %}
+    {% if messages %}
+    {% for message in messages %}
+
+    <div class="alert" style="color: red; text-align: center;" >
+      <b>
+         {{ message }}
+      </b>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="cont">
+        <form id="myform2"  action="{{url_for('edit_item')}}" method='POST'>
+            
+            <input type="text" id="name1" name="bname" value= {{stat}} readonly required>
+            <br>
+            <label for="name">Item Name</label><br>
+            <select id="name" name="iname">
+              {% for row in list_items %}
+              <option value={{row[1]}}>{{row[1]}}</option>
+              {% endfor %}
+           </select>
+            <br>
+            <label for="email">Quantity</label><br>
+            <input type="text" id="num" name="num">
+            <br>
+            <label for="file"><b>Edit/Delete</b></label><br>
+            <select id="file" name="file">
+               <option value="Edit">Edit</option>
+               <option value="Delete">Delete</option>
+            </select>
+            <br>
+            
+            <br>
+            <input type="submit" value="submit">
+        </form>
+        </div>
+        <div id="table1">
+        <div class="cont1"><h2>Your Added Items....</h2>
+            {% if list_items %}
+              <table class="table table-bordered">
+              <thead>
+              <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Image</th>
+           
+              </tr>
+              </thead>
+              <tbody>
+              {% for row in list_items %}
+              <tr>
+              <td>{{row[1]}}</td>
+              <td>{{row[2]}}</td>
+              <td><a href="{{row[3]}}">{{row[3]}}</a></td>
+            
+              </tr>
+              {% endfor %}
+              </tbody>
+              </table>
+            {% else %}  
+              <p>No Items Available! Please Add an Item!</p>
+            {% endif %}  
+            </div>
+          </div>
+<style>
+
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("/static/vec.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 2px;
+}
+
+#name1{
+display: none;
+}
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  font-weight: 100px;
+  text-align: center;
+  padding: 22px 30px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+h1{
+  text-align: center;
+  font-family: cursive;
+}
+.field [type="button"]{
+  color: #fff;
+  border: none;
+  width: 20%;
+  font-size: 20px;
+  font-family: cursive;
+  text-align: center;
+  padding: 12px;
+  margin-left: 480px;
+  border-radius: 15px;
+  background:  linear-gradient(-135deg, #c850c0, #4158d0);
+  transition: all 0.3s ease;
+}
+  #myform{
+                display: none;
+            }
+ #myform input{
+    padding: 6px;
+    border-radius: 4px;
+ }
+ #myform input[type=submit]{
+    padding: 8px;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+ }
+ #myform2{
+                display: none;
+            }
+
+ #myform2 input{
+    padding: 6px;
+    border-radius: 4px;
+ }
+ #myform2 input[type=submit]{
+    padding: 8px;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+ }
+
+ #table1{
+                display: none;
+            }
+
+.cont{
+display: flex;
+padding-left: 480px;
+}
+.cont1{
+  margin-left: 350px;
+}
+
+ .btn-grp button{
+    background: linear-gradient(-135deg, #c88e50, #d0b841);
+    margin-top: 20px;
+    border: 1px solid wheat;
+    color: black;
+    padding: 15px 24px;
+    cursor: pointer;
+    margin-left: 450px;
+    width: 30%;
+    display: block;
+}
+.topnav button.split{
+  float: right;
+  background-color: #333;
+  color: white;
+  padding: 20px 10px;
+}
+</style>
+</body>
+</html>
