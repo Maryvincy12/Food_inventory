@@ -8,16 +8,16 @@ application = app = Flask(__name__)
 
 #s3 connection
 s3 = boto3.client('s3',
-                      aws_access_key_id='AKIAQRKQEGPJJ5QM53X6',
-                      aws_secret_access_key='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')
+                      aws_access_key_id='id',
+                      aws_secret_access_key='key')
 
 
 app.secret_key=os.urandom(24)
 
 #database connection establishment
-app.config['MYSQL_HOST'] = 'marydb.cuuatoz5ywpt.ap-southeast-2.rds.amazonaws.com'
-app.config['MYSQL_USER'] = 'marydb'
-app.config['MYSQL_PASSWORD'] = 'Mary12vincy'
+app.config['MYSQL_HOST'] = 'host'
+app.config['MYSQL_USER'] = 'db'
+app.config['MYSQL_PASSWORD'] = 'passwd'
 app.config['MYSQL_DB'] = 'sys'
 
 mysql = MySQL(app)
